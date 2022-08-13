@@ -11,6 +11,8 @@ class MarvelProvider extends ChangeNotifier {
 
   final String _baseUrl = 'gateway.marvel.com:443';
   static const String _apiKey = 'c6e452efd0c7c69be7a7835f2985b12a';
+  static const String _offset = '0'; //cantidad de elementos que se quedan fuera de la consulta
+  static const String _limit = '20'; //Cantidad de elementos que trae la cosulta
   static const String ts = '1';
   List<Character> charactersMarvel = [];
   List<Comic> comicsMarvel = [];
@@ -22,11 +24,13 @@ class MarvelProvider extends ChangeNotifier {
     this.getComics();
   }
 
-   Future<String> _getJsonData (String endPoint) async {
+   Future<String> _getJsonData (String endPoint, [String offset = _offset, String limit = _limit]) async {
     Uri url = Uri.https(_baseUrl, endPoint, {
       'ts': ts,
       'apikey': _apiKey,
       'hash': md5Hash(ts).toString(),
+      'limit' : limit,
+      'offset' : offset,
     });
     // Await the http get response, then decode the json-formatted response.
     var response = await http.get(url);
@@ -42,7 +46,9 @@ class MarvelProvider extends ChangeNotifier {
   }
 
   Future<void> getCharacters() async {
-    final jsonData = await _getJsonData('v1/public/characters');
+    const String offsetCharacters = '0';
+    const String limitCharacters= '5';
+    final jsonData = await _getJsonData('v1/public/characters',offsetCharacters,limitCharacters);
     final charactersResponse = CharactersResponse.fromJson(jsonData);
 
     charactersMarvel = charactersResponse.data.results;

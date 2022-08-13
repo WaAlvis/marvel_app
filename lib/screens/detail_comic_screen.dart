@@ -55,7 +55,6 @@ class _UrlsCharacter extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: urlCharacter.length,
         itemBuilder: (_, i) {
-          print(urlCharacter[i].url);
           return GestureDetector(
             onTap: () => _launchUrl(urlCharacter[i].url),
             child: Chip(

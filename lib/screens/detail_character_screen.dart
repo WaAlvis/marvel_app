@@ -56,7 +56,6 @@ class _UrlsCharacter extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: urlCharacter.length,
         itemBuilder: (_, i) {
-          print(urlCharacter[i].url);
           return GestureDetector(
             onTap: () => _launchUrl(urlCharacter[i].url),
             child: Chip(
@@ -74,7 +73,7 @@ class _UrlsCharacter extends StatelessWidget {
 
   Future<void> _launchUrl(String url) async {
     final Uri _url = Uri.parse(url);
-    print('***** $_url');
+    // print('***** $_url');
     if (!await launchUrl(_url)) {
       throw 'Could not launch $_url';
     }
