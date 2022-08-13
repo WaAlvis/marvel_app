@@ -29,9 +29,11 @@ class SwipVertical extends StatelessWidget {
           child: listComics.isEmpty
               ? const CupertinoActivityIndicator()
               : ListView.separated(
-                  itemCount: 7,
+                  itemCount: listComics.length,
                   itemBuilder: (_, i) {
                     final comic = listComics[i];
+                    print('Comics.length = ${listComics.length}');
+                    print('Comics.length = ${comic.id}');
                     return Hero(
                       tag: comic.id,
                       child: _CardView(
