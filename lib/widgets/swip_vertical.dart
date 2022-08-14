@@ -6,14 +6,38 @@ import 'dart:math' show Random;
 
 import 'package:marvel_app_test/screens/screens.dart';
 
-class SwipVertical extends StatelessWidget {
+class SwipVertical extends StatefulWidget {
   final List<Comic> listComics;
+  final Function onNextPage;
 
   const SwipVertical({
     Key? key,
-    required this.listComics,
+    required this.listComics, required this.onNextPage,
   }) : super(key: key);
 
+  @override
+  State<SwipVertical> createState() => _SwipVerticalState();
+}
+
+class _SwipVerticalState extends State<SwipVertical> {
+
+  ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if(scrollController.position.pixels >= scrollController.position.maxScrollExtent-500){
+        print('pedir nuevos comics al provider');
+        widget.onNextPage();
+      }
+    });
+  }
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     const String rating = '3.5';
@@ -26,14 +50,13 @@ class SwipVertical extends StatelessWidget {
           height: 16,
         ),
         Expanded(
-          child: listComics.isEmpty
+          child: widget.listComics.isEmpty
               ? const CupertinoActivityIndicator()
               : ListView.separated(
-                  itemCount: listComics.length,
+                  controller: scrollController,
+                  itemCount: widget.listComics.length,
                   itemBuilder: (_, i) {
-                    final comic = listComics[i];
-                    print('Comics.length = ${listComics.length}');
-                    print('Comics.length = ${comic.id}');
+                    final comic = widget.listComics[i];
                     return Hero(
                       tag: comic.id,
                       child: _CardView(

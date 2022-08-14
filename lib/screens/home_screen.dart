@@ -38,6 +38,9 @@ class HomeScreen extends StatelessWidget {
                   height: size.height * 0.35,
                   child: SliderHorizontalCard(
                     characters: marvelProvider.charactersMarvel,
+                    onNextPage: () {
+                      marvelProvider.getCharacters();
+                    },
                   ),
                 ),
                 const SizedBox(
@@ -47,6 +50,7 @@ class HomeScreen extends StatelessWidget {
                   height: size.height * 0.8,
                   child: SwipVertical(
                     listComics: marvelProvider.comicsMarvel,
+                    onNextPage: () => marvelProvider.getComics(),
                   ),
                 )
               ],

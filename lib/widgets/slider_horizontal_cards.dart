@@ -2,13 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:marvel_app_test/models/models.dart';
 import 'package:marvel_app_test/screens/detail_character_screen.dart';
 
-class SliderHorizontalCard extends StatelessWidget {
+class SliderHorizontalCard extends StatefulWidget {
   final List<Character> characters;
+  final Function onNextPage;
 
   const SliderHorizontalCard({
     required this.characters,
-    Key? key,
+    Key? key, required this.onNextPage,
   }) : super(key: key);
+
+  @override
+  State<SliderHorizontalCard> createState() => _SliderHorizontalCardState();
+
+}
+
+class _SliderHorizontalCardState extends State<SliderHorizontalCard> {
+
+  final ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if(scrollController.position.pixels >= scrollController.position.maxScrollExtent - 500){
+        print('llamar provider para obtener nuevos personajes');
+        widget.onNextPage();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +59,11 @@ class SliderHorizontalCard extends StatelessWidget {
         ),
         Flexible(
           child: ListView.separated(
+            controller: scrollController,
             scrollDirection: Axis.horizontal,
-            itemCount: characters.length,
+            itemCount: widget.characters.length,
             itemBuilder: (_, int i) {
-              final character = characters[i];
+              final character = widget.characters[i];
               return  CardSwip(character);
             },
             separatorBuilder: (_, int i) {

@@ -118,8 +118,8 @@ class _OverView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
       child: Text(
-        comic.description.isNotEmpty
-            ? comic.description
+        comic.description != null || comic.description!.isNotEmpty
+            ? comic.description!
             : 'no descripcion \nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Amet dictum sit amet justo donec enim diam vulputate. Enim sed faucibus turpis in eu mi. Nibh cras pulvinar mattis nunc sed blandit libero. Cras tincidunt lobortis feugiat vivamus at augue eget arcu.',
         textAlign: TextAlign.justify,
       ),

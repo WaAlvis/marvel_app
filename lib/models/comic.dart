@@ -6,7 +6,7 @@ class Comic {
   Comic({
     required this.id,
     required this.title,
-    required this.description,
+    this.description,
     // required this.format,
     required this.pageCount,
     // this.textObjects,
@@ -28,7 +28,7 @@ class Comic {
 
   int id;
   String title;
-  String description;
+  String? description;
 
   // Format format;
   int pageCount;
