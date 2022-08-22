@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 
-class AppBarTransparent extends StatelessWidget implements PreferredSizeWidget {
-  const AppBarTransparent({
-    Key? key,
-  }) : super(key: key);
+class AppbarCustom extends StatelessWidget implements PreferredSizeWidget{
+  final Function() onPressed;
+  const AppbarCustom({Key? key, required this.onPressed}) : super(key: key);
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(70);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      actions: const <Widget>[
-        Icon(Icons.search),
-        SizedBox(
+      actions:  <Widget>[
+        IconButton(
+          icon: const Icon(Icons.search),
+          onPressed:  onPressed,
+        ),
+        const SizedBox(
           width: 16,
         )
       ],

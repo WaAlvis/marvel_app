@@ -3,6 +3,7 @@ import 'package:marvel_app_test/providers/providers.dart';
 import 'package:marvel_app_test/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
+import '../search/seach_delegate.dart';
 import '../share_preferences/preferences.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -20,7 +21,9 @@ class HomeScreen extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       // extendBodyBehindAppBar: true,
-      appBar: const AppBarTransparent(),
+      appBar:  AppbarCustom(
+        onPressed: () => showSearch(context: context, delegate: MarvelSearchDelegate()) ,
+      ),
       body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(

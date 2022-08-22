@@ -4,8 +4,6 @@ import 'package:marvel_app_test/screens/screens.dart';
 import 'package:marvel_app_test/share_preferences/preferences.dart';
 import 'package:provider/provider.dart';
 
-import 'theme/app_theme.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

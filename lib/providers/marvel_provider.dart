@@ -20,14 +20,27 @@ class MarvelProvider extends ChangeNotifier {
   List<Comic> comicsMarvel = [];
 
   MarvelProvider() {
-    print('MarverProvider Inicializado...');
+    print('MarvelProvider Inicializado...');
 
     this.getCharacters();
     this.getComics();
+    this.searchCharacter('stone');
+  }
+
+  Future<List<Character>> searchCharacter (String query) async {
+    Uri url = Uri.https(_baseUrl, 'v1/public/characters',{
+      'ts': ts,
+      'apikey': _apiKey,
+      'hash': md5Hash(ts).toString(),
+      'nameStartsWith' : query
+    });
+    var response = await http.get(url);
+    final searchResponse = CharactersResponse.fromJson(response.body);
+    return searchResponse.data.results;
   }
 
   Future<String> _getJsonData(String endPoint, int offset,
-      [int limit = 20]) async {
+      [int limit = 20,]) async {
     Uri url = Uri.https(_baseUrl, endPoint, {
       'ts': ts,
       'apikey': _apiKey,
@@ -39,6 +52,8 @@ class MarvelProvider extends ChangeNotifier {
     var response = await http.get(url);
     return response.body;
   }
+
+
 
   getComics() async {
     // int offsetComics = _pageComics * _limit;
@@ -63,6 +78,7 @@ class MarvelProvider extends ChangeNotifier {
     charactersMarvel = [...charactersMarvel,...charactersResponse.data.results];
     notifyListeners();
   }
+
 
   static Digest md5Hash(String ts) {
     const String privateKey = 'ca53232a1e34b3fa8b3816921d0d94f6122e3af7';

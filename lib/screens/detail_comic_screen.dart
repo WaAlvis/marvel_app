@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:marvel_app_test/models/models.dart';
-import 'package:marvel_app_test/providers/providers.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
@@ -14,9 +12,6 @@ class DetailComicScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Comic comic = ModalRoute.of(context)!.settings.arguments as Comic;
 
-    final marvelProvider = Provider.of<MarvelProvider>(context);
-
-    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       // extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -25,6 +20,7 @@ class DetailComicScreen extends StatelessWidget {
       body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
+
             child: Column(
               children: [
                 _PosterAndTitle(comic),
